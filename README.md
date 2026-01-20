@@ -48,7 +48,7 @@ Realizar un análisis exploratorio de datos que permita comprender la estructura
 |------ README.md # Documento principal con la descripción general del proyecto.
 |------ requirements.txt # Lista de dependencias del proyecto, librerías necesarias para ejecutar notebooks, scripts y reproducir el análisis.
 |------ Informe_EDA.pdf # Informe final con el resumen del proceso, resultados del EDA e interpretaciones principales.
-|------ Dashboard.pbix # 
+|------ Dashboard.pbix # Archivo de Power BI con el dashboard final del proyecto, incluyendo el modelo de datos, medidas DAX, visualizaciones y segmentadores para explorar los resultados del análisis.
 ```
 
 ## 4. 📋 Descripción del Conjunto de Datos
