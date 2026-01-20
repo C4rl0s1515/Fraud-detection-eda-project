@@ -39,6 +39,8 @@ Realizar un análisis exploratorio de datos que permita comprender la estructura
     |-- IRSIncomeByZipCode_limpio.parquet # Datos socioeconómicos por ZIP depurados y estandarizados.
     |-- df_final.parquet # Dataset unificado y preparado para el análisis final.
     |-- df_final_eda.parquet # Dataset final con las variables creadas en el EDA.
+    |-- df_final_eda_powerbi.xlsx # Versión en Excel de df_final_eda, generada para facilitar la importación y compatibilidad con Power BI. 
+    |-- df_final_eda_powerbi_terminado.xlsx # Versión final en Excel preparada para Power BI, con trans_date formateada como texto (YYYY-MM-DD) para evitar problemas de lectura de fechas.
 |------ notebook # Notebooks con el desarrollo del análisis.
     |--- 0.1_analisis_preliminar.ipynb # Exploración inicial y revisión del formato de los datos.
     |--- 0.2_limpieza_y_transformación.ipynb # Procesos de depuración y transformación del dataset.
@@ -46,6 +48,7 @@ Realizar un análisis exploratorio de datos que permita comprender la estructura
 |------ README.md # Documento principal con la descripción general del proyecto.
 |------ requirements.txt # Lista de dependencias del proyecto, librerías necesarias para ejecutar notebooks, scripts y reproducir el análisis.
 |------ Informe_EDA.pdf # Informe final con el resumen del proceso, resultados del EDA e interpretaciones principales.
+|------ Dashboard.pbix # 
 ```
 
 ## 4. 📋 Descripción del Conjunto de Datos
@@ -222,6 +225,10 @@ Como resultado de ejecutar todo el proceso, se generan:
 
 - `data/0.2_processed/df_final_eda.parquet`
 
+- `data/0.2_processed/df_final_eda_powerbi.xlsx`
+
+- `data/0.2_processed/df_final_eda_powerbi_terminado.xlsx`
+
 ## 6. ✍️ Recap Sesiones
 
 **Sesión 1**
@@ -280,11 +287,15 @@ Como resultado de ejecutar todo el proceso, se generan:
 
 **Sesión 7**
 
-- Desarrollo del dashboard en Power BI
+- Desarrollo del dashboard en Power BI.
 
-- Elaboración del informe final
+- Elaboración del informe final.
 
-- Finalización y revisión del README 
+**Sesión 8**
+
+- Finalización y revisión del README.
+
+- Finalización y revisión del informe final. 
 
 ## 7. 🧷 Resultados y Conclusiones
 
