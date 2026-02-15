@@ -1,9 +1,9 @@
 
-# Análisis Exploratorio de Datos: Detención de Fraude en Transacciones
+# Análisis Exploratorio de Datos: Detección de Fraude en Transacciones
 
 ## 1. 🧾 Introducción
 
-Este repositorio contiene un proyecto de análisis exploratorio de datos, que tiene como finalidad analizar de forma estructurada las caracteristicas y el comportamiento de las transacciones financieras y los factores asociados a la detección del fraude. El proposito principal del trabajo es construir un dataset final unificado a partir de la integración de dos fuentes distintas, un dataset de transacciones etiquetadas que contiene la variable objetivo `is_fraud` y un dataset que contiene un conjunto de indicadores socioeconómicos agregados por código postal, lo que permite contextualizar el entorno económico y fiscal donde se realiza cada operación.
+Este repositorio contiene un proyecto de análisis exploratorio de datos, que tiene como finalidad analizar de forma estructurada las características y el comportamiento de las transacciones financieras y los factores asociados a la detección del fraude. El propósito principal del trabajo es construir un dataset final unificado a partir de la integración de dos fuentes distintas, un dataset de transacciones etiquetadas que contiene la variable objetivo `is_fraud` y un dataset que contiene un conjunto de indicadores socioeconómicos agregados por código postal, lo que permite contextualizar el entorno económico y fiscal donde se realiza cada operación.
 
 El proyecto abarca todas las etapas de un análisis exploratorio completo, lo que asegura un análisis fiable. En primer lugar, se realiza una revisión preliminar para comprender la estructura de ambos dataset, además se examina la calidad de los datos para detectar posibles problemas en su formato. A continuación, se aplica un proceso de limpieza y transformación orientado a estandarizar el formato de las columnas, asegurando la coherencia entre variables clave y eliminando columnas que no aportan valor al análisis, para seguidamente realizar la unión de ambas fuentes de datos mediante el zip.
 
@@ -25,7 +25,7 @@ Realizar un análisis exploratorio de datos que permita comprender la estructura
 
     Al final de esta fase, se realiza la unión de ambas fuentes de datos a través del código postal **ZIP**, construyendo un dataset integrado y consistente, y verificando la coherencia de la información.
 
-- ***Análisis exploratorio de datos (EDA)*** : Analizar de forma detallada el dataset final para describir la distribución de las variables mediante un análisis univariante y estudiar su relación con la variable objetivo **is_fraud** a traves de análisis bivariante, incorporando visualizaciones y medidas robustas. Asimismo, se generan variables derivadas de tipo temporal, demográfico y económico que facilitan el estudio, lo que permiten profundizar en la identificación de diferencias asociadas a transacciones fraudulentas.
+- ***Análisis exploratorio de datos (EDA)*** : Analizar de forma detallada el dataset final para describir la distribución de las variables mediante un análisis univariante y estudiar su relación con la variable objetivo **is_fraud** a través de análisis bivariante, incorporando visualizaciones y medidas robustas. Asimismo, se generan variables derivadas de tipo temporal, demográfico y económico que facilitan el estudio, lo que permiten profundizar en la identificación de diferencias asociadas a transacciones fraudulentas.
 
 ## 3. 📂 Estructura del Proyecto
 
@@ -33,7 +33,7 @@ Realizar un análisis exploratorio de datos que permita comprender la estructura
 |------ data # Conjunto de datos utilizados en el proyecto.
   |---- 1.raw # Datos originales sin procesar.
     |--- fraudTrain.csv # Dataset inicial de transaciones.
-    |--- IRSIncomeByZipCode.xlsx # Archivo original con información socieconomica por ZIP.
+    |--- IRSIncomeByZipCode.xlsx # Archivo original con información socieconómica por ZIP.
   |---- 2.processed # Datos transformados y listos para el análisis.
     |-- fraudTrain_limpio.parquet # Versión depurada del dataset de transacciones.
     |-- IRSIncomeByZipCode_limpio.parquet # Datos socioeconómicos por ZIP depurados y estandarizados.
@@ -57,7 +57,7 @@ Este conjunto de datos integra transacciones bancarias y variables socioeconómi
 
 Los conjuntos de datos y las variables empleadas en el análisis exploratorio son los siguientes:
 
-`fraudTrain.csv` (Dataset transaciones con tarjeta de credito)
+`fraudTrain.csv` (Dataset de transaciones con tarjeta de credito)
 
 - **index**: Identificador único de cada fila
 
@@ -229,7 +229,41 @@ Como resultado de ejecutar todo el proceso, se generan:
 
 - `data/0.2_processed/df_final_eda_powerbi_terminado.xlsx`
 
-## 6. ✍️ Recap Sesiones
+## 6. 📊 Dashboard en Power BI
+
+### Cómo abrir el dashboard
+
+1. Instalar Power BI Desktop.
+2. Abrir el archivo `Dashboard.pbix` ubicado en la raíz del proyecto.
+3. Si Power BI solicita actualizar rutas, asegurarse de que el archivo:
+   `data/2.processed/df_final_eda_powerbi_terminado.xlsx`
+   esté disponible en la estructura indicada.
+4. Pulsar "Actualizar" para cargar los datos.
+
+### Estructura del dashboard
+
+El dashboard está compuesto por dos páginas principales:
+
+- **Executive_Summary**: Vista operativa con KPIs clave, rankings dinámicos por categoría y estado, análisis temporal y bloque de alertas.
+- **Detailed_Data**: Vista de auditoría que permite inspeccionar transacciones individuales y filtrar registros sospechosos.
+
+### Capturas del dashboard
+
+**Executive_Summary**
+![Executive Summary](assets/executive_summary.png)
+
+**Detailed_Data**
+![Detailed Data](assets/detailed_data.png)
+
+### Preguntas que responde el dashboard
+
+- ¿Cuál es la tasa global de fraude y cómo evoluciona por fecha?
+- ¿Qué categorías y estados presentan mayor riesgo considerando volumen mínimo?
+- ¿En qué franjas horarias se concentra la mayor probabilidad de fraude?
+- ¿Qué transacciones cumplen reglas operativas de alerta?
+- ¿Cómo se comportan los importes relativos respecto al nivel de renta del ZIP?
+
+## 7. ✍️ Recap Sesiones
 
 **Sesión 1**
 
@@ -243,7 +277,7 @@ Como resultado de ejecutar todo el proceso, se generan:
 
 **Sesión 2**
 
-- Se crea el notebook `0.1-Analisis_preliminar.ipynb`.
+- Se crea el notebook `0.1-analisis_preliminar.ipynb`.
 
 - Exploración inicial de ambos datasets para entender su estructura y variables, revisar tipos de datos y detectar posibles incoherencias.
 
@@ -297,7 +331,7 @@ Como resultado de ejecutar todo el proceso, se generan:
 
 - Finalización y revisión del informe final. 
 
-## 7. 🧷 Resultados y Conclusiones
+## 8. 🧷 Resultados y Conclusiones
 
 El análisis exploratorio de datos ha permitido obtener una visión detallada del comportamiento de las transacciones y de los factores asociados a la detección de fraude, integrando las transacciones con información socioeconómica agregada por código postal. Tras la depuración e integración, se trabaja con un dataset final de **325.090** registros y **23** variables, sin evidencias de problemas básicos de calidad, lo que confirma que el conjunto está preparado para el análisis.
 
@@ -313,11 +347,11 @@ En el análisis temporal, el patrón más claro aparece en el componente horario
 
 En conclusión, el análisis exploratorio confirma que el fraude no responde a un único factor, sino a la combinación de de características económicas, del importe relativo, y del contexto temporal, especialmente a nivel horario. El proyecto deja un dataset final enriquecido que permite identificar los patrones más consistentes y las variables con mayor capacidad descriptiva, dejando una base sólida para fases posteriores de análisis orientados a explicar el fenómeno con mayor detalle o plantear modelos predictivos con métricas que tengan en cuenta el fuerte desbalance de la clase positiva.
 
-## 8. 🤝 Contribuciones
+## 9. 🤝 Contribuciones
 
-Cualquier contribucion es bien venida, si quiere colaborar en el proyecto, abre un pull request.
+Cualquier contribución es bienvenida, si quiere colaborar en el proyecto, abre un pull request.
 
-## 9. ✍️ Autores
+## 10. ✍️ Autores
 
 Carlos Hernando
 
