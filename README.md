@@ -27,9 +27,16 @@ Realizar un análisis exploratorio de datos que permita comprender la estructura
 
 - ***Análisis exploratorio de datos (EDA)*** : Analizar de forma detallada el dataset final para describir la distribución de las variables mediante un análisis univariante y estudiar su relación con la variable objetivo **is_fraud** a través de análisis bivariante, incorporando visualizaciones y medidas robustas. Asimismo, se generan variables derivadas de tipo temporal, demográfico y económico que facilitan el estudio, lo que permiten profundizar en la identificación de diferencias asociadas a transacciones fraudulentas.
 
+- **Análisis estadístico** : Validar formalmente los patrones identificados en el EDA mediante intervalos de confianza para tasas de fraude y contrastes de diferencia de proporciones entre segmentos relevantes. Además, de estimar un baseline de regresión logística simple para cuantificar la capacidad discriminativa conjunta de variables clave en un contexto de fuerte desbalance de clases. 
+
+- **Dashboard operativo en Power BI** : Construir un dashboard interactivo orientado a la monitorización del fraude, incluyendo KPIs, segmentadores y vistas de auditoría. El objetivo es facilitar la priorización de segmentos de riesgo por tiempo, categoría, estado y permitir la inspección de transacciones individuales.
+
 ## 3. 📂 Estructura del Proyecto
 
 ```text 
+|------ assets # Capturas del dashboard.
+    |--- executive_summary.png
+    |--- detailed_data.png
 |------ data # Conjunto de datos utilizados en el proyecto.
   |---- 1.raw # Datos originales sin procesar.
     |--- fraudTrain.csv # Dataset inicial de transaciones.
@@ -45,6 +52,7 @@ Realizar un análisis exploratorio de datos que permita comprender la estructura
     |--- 0.1_analisis_preliminar.ipynb # Exploración inicial y revisión del formato de los datos.
     |--- 0.2_limpieza_y_transformación.ipynb # Procesos de depuración y transformación del dataset.
     |--- 0.3_analis_exploratorio_de_datos.ipynb # Análisis exploratorio completo y visualizaciones.
+    |--- 0.4_analisis_estadisitico.ipynb # Validación estadística de hallazgos del EDA, intervalos de confianza, tests de proporciones y baseline de regresión logística.
 |------ README.md # Documento principal con la descripción general del proyecto.
 |------ requirements.txt # Lista de dependencias del proyecto, librerías necesarias para ejecutar notebooks, scripts y reproducir el análisis.
 |------ Informe_EDA.pdf # Informe final con el resumen del proceso, resultados del EDA e interpretaciones principales.
@@ -193,9 +201,9 @@ pip install -r requirements.txt
 
 #### 1. Datos originales:
 
-- `data/0.1_raw/fraudTrain.csv`
+- `data/1_raw/fraudTrain.csv`
 
-- `data/0.1_raw/IRSIncomeByZipCode.xlsx`
+- `data/1_raw/IRSIncomeByZipCode.xlsx`
 
 #### 2. Ejecuta los notebooks en este orden:
 
@@ -213,21 +221,25 @@ pip install -r requirements.txt
 
 - Generación del dataset final.
 
+4. `notebook/0.4_analisis_estadistico.ipynb`
+
+- Validación estadística de los patrones detectados en el EDA mediante intervalos de confianza para tasas, tests de diferencia de proporciones y un baseline de regresión logística.
+
 #### 3. Archivos generados:
 
 Como resultado de ejecutar todo el proceso, se generan:
 
-- `data/0.2_processed/fraudTrain_limpio.parquet`
+- `data/2_processed/fraudTrain_limpio.parquet`
 
-- `data/0.2_processed/IRSIncomeByZipCode_limpio.parquet`
+- `data/2_processed/IRSIncomeByZipCode_limpio.parquet`
 
-- `data/0.2_processed/df_final.parquet`
+- `data/2_processed/df_final.parquet`
 
-- `data/0.2_processed/df_final_eda.parquet`
+- `data/2_processed/df_final_eda.parquet`
 
-- `data/0.2_processed/df_final_eda_powerbi.xlsx`
+- `data/2_processed/df_final_eda_powerbi.xlsx`
 
-- `data/0.2_processed/df_final_eda_powerbi_terminado.xlsx`
+- `data/2_processed/df_final_eda_powerbi_terminado.xlsx`
 
 ## 6. 📊 Dashboard en Power BI
 
@@ -317,15 +329,25 @@ El dashboard está compuesto por dos páginas principales:
 
 - Consolidación de resultados y redacción de observaciones principales de cada bloque del EDA.
 
+**Sesión 7**
+
+- Creación del notebook `0.4_analisis_estadistico.ipynb`.
+
+- Cálculo de intervalos de confianza al 95% para las tasas de fraude por franja horaria y validación de estabilidad de los resultados mediante el método de Wilson.
+
+- Aplicación de tests de diferencia de proporciones para contrastar formalmente diferencias entre segmentos noche vs día y Top categorías vs resto, reportando significación estadística y tamaño de efecto.
+
+- Entrenamiento de un baseline de regresión logística simple con variables clave `amt_vs_avg_agi` y `hour`, evaluación con métricas adecuadas al desbalance y redacción de conclusiones del bloque estadístico.
+
 - Elaboración del informe final `Informe_EDA.pdf` con el proceso completo, hallazgos relevantes y conclusiones generales.
 
-**Sesión 7**
+**Sesión 8**
 
 - Desarrollo del dashboard en Power BI.
 
-- Elaboración del informe final.
+- Conexión del dashboard al dataset final generado.
 
-**Sesión 8**
+**Sesión 9**
 
 - Finalización y revisión del README.
 
@@ -345,7 +367,11 @@ En el análisis de variables categóricas, las diferencias en la tasa de fraude 
 
 En el análisis temporal, el patrón más claro aparece en el componente horario. Por franja horaria `moment_of_day`, destacan tasas más elevadas en **late night** con un **1,92%** y **night** con un **1,27%**, frente a franjas diurnas como **morning** que apenas alcanza el **0,10%** o **afternoon** con un **0,13%**. Esta tendencia se refuerza al bajar al detalle por hora, en la tabla por hora aparecen picos especialmente marcados en **22h** y **23h** con un **2,92%** y un **2,71%** respectivamente, mientras que muchas horas diurnas se mantienen en niveles bajos. Por el contrario, el patrón semanal es más suave, las tasas por `day_of_week` se mueven en un rango estrecho aproximadamente entre el **0,48%** y el **0,71%**, lo que indica variaciones pequeñas entre días. En conjunto, el tiempo aporta información útil, pero principalmente a nivel intradía horas y franjas horarias, es donde las diferencias son más consistentes.
 
-En conclusión, el análisis exploratorio confirma que el fraude no responde a un único factor, sino a la combinación de de características económicas, del importe relativo, y del contexto temporal, especialmente a nivel horario. El proyecto deja un dataset final enriquecido que permite identificar los patrones más consistentes y las variables con mayor capacidad descriptiva, dejando una base sólida para fases posteriores de análisis orientados a explicar el fenómeno con mayor detalle o plantear modelos predictivos con métricas que tengan en cuenta el fuerte desbalance de la clase positiva.
+Como complemento al EDA, se incorporó un bloque de análisis estadístico para validar si las diferencias observadas entre segmentos son consistentes y no se explican por variabilidad muestral. Los intervalos de confianza (95%) para tasas por franja horaria confirman que night y late night presentan un riesgo claramente superior al de las franjas diurnas. Además, los tests de diferencia de proporciones respaldan la separación entre noche vs día y entre Top categorías (min_n = 500) vs resto, aportando evidencia formal de que estas segmentaciones concentran mayor riesgo. Finalmente, un baseline de regresión logística con amt_vs_avg_agi y hour obtiene ROC-AUC = 0,846 y PR-AUC = 0,168, lo que indica una buena capacidad para priorizar casos de fraude en un escenario fuertemente desbalanceado.
+
+Posteriormente se incorpora un bloque de análisis estadístico para comprobar si las diferencias observadas entre segmentos se mantienen de forma consistente y no responden únicamente a variabilidad muestral. Los intervalos de confianza al **95%** para las tasas por franja horaria muestran que **night** y **late night** presentan un riesgo claramente superior al de las franjas diurnas. Asimismo, los tests de diferencia de proporciones confirman la separación entre **noche vs día** y entre **Top categorías vs resto**, aportando evidencia formal de que estas segmentaciones concentran mayor riesgo. Finalmente, un baseline de regresión logística con `amt_vs_avg_agi` y `hour` alcanza **ROC-AUC = 0,846** y **PR-AUC = 0,168**, lo que indica una capacidad consistente para priorizar transacciones de mayor probabilidad de fraude en un contexto fuertemente desbalanceado.
+
+En conclusión, el análisis exploratorio confirma que el fraude no responde a un único factor, sino a la combinación de características económicas, del importe relativo y del contexto temporal, especialmente a nivel horario. La validación estadística refuerza que las diferencias observadas por franja horaria y por categoría son consistentes, y el baseline cuantifica la señal conjunta de variables clave en un marco simple e interpretable. El proyecto deja un dataset final preparado que permite identificar los patrones más consistentes y las variables con mayor capacidad descriptiva, además de un dashboard que permite explorar KPIs, segmentaciones y auditoría de transacciones, proporcionando una base sólida tanto para priorización operativa como para desarrollos posteriores orientados a modelización más avanzada.
 
 ## 9. 🤝 Contribuciones
 
