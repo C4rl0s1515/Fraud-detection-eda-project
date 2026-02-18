@@ -35,8 +35,8 @@ Realizar un análisis exploratorio de datos que permita comprender la estructura
 
 ```text 
 |------ assets # Capturas del dashboard.
-    |--- executive_summary.png
-    |--- detailed_data.png
+    |--- 0.1_executive_summary.png
+    |--- 0.2_detailed_data.png
 |------ data # Conjunto de datos utilizados en el proyecto.
   |---- 1.raw # Datos originales sin procesar.
     |--- fraudTrain.csv # Dataset inicial de transaciones.
